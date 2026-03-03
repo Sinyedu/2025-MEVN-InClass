@@ -32,13 +32,17 @@ const router = createRouter({
     },
   ],
 });
-//Not using from for now
-router.beforeEach((to, from) => {
-  const isAuthenticated = localStorage.getItem("token");
+//Currently can not logout xD
+// router.beforeEach((to, from, next) => {
+//   const isAuthenticated = localStorage.getItem("token");
 
-  if (to.name === "admin" && !isAuthenticated) {
-    return { name: "auth" };
-  }
-});
+//   if (to.name === "auth" && isAuthenticated) {
+//     next({ name: "admin" });
+//   } else if (to.meta.requiresAuth && !isAuthenticated) {
+//     next({ name: "auth" });
+//   } else {
+//     next();
+//   }
+// });
 
 export default router;
