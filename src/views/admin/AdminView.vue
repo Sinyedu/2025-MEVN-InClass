@@ -190,6 +190,7 @@
             <!-- Delete button -->
             <button
               class="bg-green-600 text-white p-2 rounded hover:bg-green-700"
+              @click="updateProductHandler(product)"
             >
               Edit
             </button>
@@ -206,6 +207,7 @@
 import { ref } from "vue";
 import { onMounted } from "vue";
 import { useProducts } from "@/modules/useProducts";
+import type { Product } from "../../interfaces/products"
 
 const {
   products,
@@ -215,6 +217,7 @@ const {
   error,
   loading,
   getTokenIdandUserId,
+  updateProduct
 } = useProducts();
 
 onMounted(() => {
@@ -241,6 +244,21 @@ const addProductHandler = async () => {
     ...newProduct.value,
   };
 };
+
+const updateProductHandler async (product: Product) => {
+
+  const updatedProudct = {
+  name: product.name,
+  description: product.description,
+  price: product.price,
+  stock: product.stock,
+  discount: product.discount,
+  discountPct: product.discountPct,
+  isHidden: product.isHidden,
+  imageURL: product.imageURL
+  }
+    await updateProduct(product._id, updateProduct)
+}
 </script>
 
 <style scoped>

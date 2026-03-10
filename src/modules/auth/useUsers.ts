@@ -1,9 +1,9 @@
 import { ref } from "vue";
 import type { User } from "@/interfaces/user";
-
+import { state } from "../globalStates/state"
 export const useUsers = () => {
   const token = ref<string | null>(null);
-  const isLoggedIn = ref<boolean>(false);
+  // const isLoggedIn = ref<boolean>(false);
   const error = ref<string | null>(null);
   const user = ref<User | null>(null);
 
@@ -35,7 +35,7 @@ export const useUsers = () => {
 
       token.value = authResponse.data.token;
       user.value = authResponse.data.userId;
-      isLoggedIn.value = true;
+      state.isLoggedIn = true
 
       localStorage.setItem("token", authResponse.data.token);
       localStorage.setItem("userIDToken", authResponse.data.userId);
@@ -49,7 +49,7 @@ export const useUsers = () => {
     } catch (err) {
       error.value =
         (err as Error).message || "An unknown error occurred during login.";
-      isLoggedIn.value = false;
+      state.isLoggedIn = false;
       console.error("Error during login:", error.value);
     }
   };
@@ -89,7 +89,7 @@ export const useUsers = () => {
       error.value =
         (err as Error).message ||
         "An unknown error occurred during registration.";
-      isLoggedIn.value = false;
+      state.isLoggedIn = false;
       console.error("Error during registration:", error.value);
     }
   };
@@ -97,7 +97,7 @@ export const useUsers = () => {
   const logout = () => {
     token.value = null;
     user.value = null;
-    isLoggedIn.value = false;
+    state.isLoggedIn = false
     localStorage.removeItem("token");
     localStorage.removeItem("userIDToken");
     console.log("User logged out, token removed from localStorage.");
@@ -105,7 +105,7 @@ export const useUsers = () => {
 
   return {
     token,
-    isLoggedIn,
+    isLoggedIn: state.isLoggedIn,
     error,
     user,
     fetchToken,
